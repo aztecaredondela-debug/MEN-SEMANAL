@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#14463c"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="icon-180.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Táper">
+<title>Táper de la semana</title>
+<style>
+:root{--g:#14463c;--g2:#dcebe5;--bg:#eef3f1;--card:#fff;--ink:#17262a;--mu:#62736f;--ln:#d9e4df;--y:#f2b33d;--on:#fff;--rd:#b3412f}
+@media(prefers-color-scheme:dark){:root{--g:#7fd1b4;--g2:#1b3229;--bg:#0f1715;--card:#17211e;--ink:#e8f0ed;--mu:#9bb0a8;--ln:#26352f;--on:#0b1612;--rd:#f08a78}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+h1,h2,h3{font-family:ui-rounded,"Nunito","Trebuchet MS",system-ui,sans-serif;margin:0}
+button{font:inherit;cursor:pointer;border:0;border-radius:14px;padding:10px 14px;background:var(--g);color:var(--on);font-weight:650}
+button.ghost{background:transparent;color:var(--g);border:1.5px solid var(--ln)}button.red{background:transparent;color:var(--rd);border:1.5px solid var(--ln)}
+:focus-visible{outline:3px solid var(--y);outline-offset:2px}
+.app{max-width:960px;margin:auto;padding:env(safe-area-inset-top,0) 16px 110px}
+.top{padding:18px 0 10px}.top h1{font-size:23px}.top p{margin:2px 0 0;color:var(--mu);font-size:13px}
+.hero{background:linear-gradient(135deg,#14463c,#0d2f28);color:#fff;border-radius:26px;padding:20px;margin-bottom:16px}
+.hero small{opacity:.8}.hero h2{font-size:26px;margin:6px 0 14px}.hero .go{background:var(--y);color:#2a1d00}
+.clock{display:flex;align-items:center;gap:8px;margin:0 0 16px;font-size:13px}
+.clock b{display:block;font-size:15px}.clock div{flex:1;background:#ffffff1c;border-radius:14px;padding:9px 11px}.clock i{opacity:.6;font-style:normal}
+.wb{display:flex;align-items:center;gap:10px;margin:6px 0 14px}.wb[hidden]{display:none}.wb>div{flex:1;text-align:center}.wb b{font-size:18px}.wb small{display:block;color:var(--mu)}
+.wb button{width:44px;background:var(--card);color:var(--g);border:1.5px solid var(--ln)}
+.list{display:grid;gap:10px}@media(min-width:720px){.list{grid-template-columns:1fr 1fr}}
+.day,.item,.card{background:var(--card);border:1.5px solid var(--ln);border-radius:20px;padding:14px}
+.day{display:grid;grid-template-columns:54px 1fr;gap:12px;cursor:pointer;align-items:center}
+.day.today{border-color:var(--y);box-shadow:0 0 0 3px #f2b33d33}.day.done{background:var(--g2)}.day.done h3{text-decoration:line-through;opacity:.7}
+.badge{height:54px;border-radius:16px;background:var(--g2);display:grid;place-items:center;text-align:center;font-size:22px;line-height:1}.badge b{font-size:12px;color:var(--g)}
+.day h3{font-size:17px}.day p,.item p{margin:3px 0 0;color:var(--mu);font-size:13px}
+.acts{grid-column:1/-1;display:flex;gap:8px}.acts button{padding:8px 12px;font-size:14px}.acts button:last-child{margin-left:auto}
+.chip{background:var(--card);color:var(--g);border:1.5px solid var(--ln);padding:7px 12px;font-size:14px}.chip.on{background:var(--g);color:var(--on);border-color:var(--g)}
+.sc{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px}.sc .chip{white-space:nowrap}
+.item{display:flex;gap:12px;align-items:center;cursor:pointer}.item h3{font-size:16px}.em{font-size:28px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+input,select,textarea{width:100%;font:inherit;border:1.5px solid var(--ln);border-radius:12px;padding:11px;background:var(--card);color:var(--ink)}
+label{display:block;font-weight:650;font-size:13px;margin:12px 0 5px}
+.tg{display:inline-flex;gap:6px;align-items:center;font-weight:500;margin:4px 12px 4px 0}.tg input{width:auto}
+.chip.no{background:var(--rd);color:var(--on);border-color:var(--rd)}
+.note{background:var(--g2);border-radius:16px;padding:12px 14px;font-size:13px;margin:12px 0}
+.shop{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--ln);align-items:flex-start;cursor:pointer}.shop input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--g)}
+.shop.on span{text-decoration:line-through;color:var(--mu)}.shop small{display:block;color:var(--mu)}
+.empty{text-align:center;color:var(--mu);padding:30px}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;gap:6px;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0));background:var(--card);border-top:1.5px solid var(--ln);z-index:5}
+nav button{flex:1;background:transparent;color:var(--mu);font-size:13px;padding:8px}nav button.on{background:var(--g2);color:var(--g)}nav span{display:block;font-size:20px}
+.modal{position:fixed;inset:0;background:#0009;display:none;align-items:flex-end;justify-content:center;z-index:10}.modal.open{display:flex}
+.box{background:var(--bg);width:min(680px,100%);max-height:92dvh;overflow:auto;border-radius:26px 26px 0 0;padding:20px 20px 28px}@media(min-width:720px){.modal{align-items:center}.box{border-radius:26px}}
+.pill{display:inline-block;background:var(--g2);color:var(--g);border-radius:99px;padding:3px 10px;font-size:12px;font-weight:700;margin:0 4px 4px 0}
+.heat{background:#f2b33d29;border-radius:14px;padding:11px 13px;margin:12px 0;font-size:14px}.box p{white-space:pre-wrap}
+#toast{position:fixed;left:50%;bottom:92px;transform:translateX(-50%);background:#17262a;color:#fff;border-radius:12px;padding:10px 16px;display:none;z-index:20}#toast.show{display:block}
+.panel{display:none}.panel.on{display:block}
+</style>
+</head>
+<body>
+<main class="app">
+<header class="top"><h1>🍱 Táper de la semana</h1><p id="sub"></p></header>
+<div class="wb" id="wb"></div>
+<section class="panel on" id="p-plan"><div class="row" id="mc"></div><div class="row" id="ms" style="margin-top:0"></div><p id="sh" style="font-size:13px;color:var(--mu);margin:0 0 8px"></p><div class="sc" id="pc"></div><div class="note" id="pb"></div>
+<details class="card" id="pd" style="margin:12px 0"><summary id="ps" style="cursor:pointer;font-weight:650"></summary><p style="font-size:13px;color:var(--mu);margin:8px 0">Toca un ingrediente: una vez ✅ lo quieres más, dos veces 🚫 lo evitas, tres lo quitas. El menú se adapta solo.</p><div class="row" id="pbx"></div><div class="row"><input id="pn" placeholder="Añadir ingrediente (ej. gambas)…" style="flex:1;min-width:0;width:auto" onkeydown="if(event.key=='Enter')ACT.addp()"><button data-a="addp">Añadir</button></div></details><div id="hero"></div><div class="list" id="days"></div>
+<div class="note"><span id="nt"></span><br><br>Menús orientativos de alimentación saludable; no sustituyen a un dietista. Con celiaquía, alergias o enfermedad, consulta a un profesional y revisa las etiquetas.</div>
+<button class="ghost" data-a="rst">Restablecer cambios de este menú</button></section>
+<section class="panel" id="p-rec"><div class="head"><h2>Platos</h2><button data-a="newr">＋ Nuevo plato</button></div>
+<input id="q" placeholder="Buscar plato…" oninput="q=this.value;rRec()" style="margin-top:12px"><div class="row sc" id="rc"></div><div class="list" id="rl"></div></section>
+<section class="panel" id="p-shop"><div class="head"><h2>Lista de la compra</h2><button class="ghost" data-a="copy">Compartir</button></div><div class="card" style="margin-top:12px"><div class="head"><b id="sc"></b><button class="ghost" data-a="unchk" style="padding:6px 10px">Desmarcar</button></div><div id="sl"></div></div>
+<p class="note">Cantidades por persona. Revisa lo que ya tienes en casa.</p></section>
+</main>
+<nav><button class="on" data-a="tab" data-x="plan"><span>📅</span>Menú</button><button data-a="tab" data-x="rec"><span>👩‍🍳</span>Platos</button><button data-a="tab" data-x="shop"><span>🛒</span>Compra</button></nav>
+<div class="modal" id="m"><div class="box" id="mb"></div></div><div id="toast"></div>
+<script>
+/* Etiquetas: M mediterráneo, P proteínas, F fibra, G bajo grasa saturada, V vegetal, S sin gluten, L sin lactosa, D deportistas, A mayores */
+const T={M:['🫒','Mediterráneo','Aceite de oliva, verdura, legumbres y pescado; poca carne roja.'],P:['💪','Alto en proteínas','Una buena fuente de proteína en cada plato: carne magra, pescado, huevo o legumbres.'],F:['🌾','Rico en fibra','Legumbres, integrales y verdura en cada comida.'],G:['❤️','Bajo en grasas saturadas','Carnes magras, pescado y aceite de oliva; sin fritos ni embutidos.'],V:['🌱','Vegetal','100 % vegetal: legumbres, cereales y verdura. Vigila la vitamina B12 (suplemento o alimentos enriquecidos).'],S:['🚫','Sin gluten','Sin trigo, cebada ni centeno. Usa caldos y salsas certificados y evita la contaminación cruzada.'],L:['🥛','Sin lactosa','Sin leche ni derivados. Comprueba etiquetas de caldos y salsas.'],D:['🏃','Deportistas','Hidratos y proteína para entrenar y recuperar. Ajusta las raciones a tu actividad.'],A:['🧓','Personas mayores','Texturas tiernas, proteína suficiente y platos fáciles de masticar y digerir.']};
+const EM={Pollo:'🍗',Carne:'🥩',Pescado:'🐟',Pasta:'🍝',Arroz:'🍚',Legumbres:'🫘',Otros:'🍽️'};
+const TIP={Arroz:'Una cucharada de agua, tapa y 2 min; remueve y 1 min más.',Pasta:'Un chorrito de agua o salsa, tapa y 2 min; remueve y 1 min más.',Pescado:'Potencia media y tapado, 2 min, para que no se seque.',Pollo:'Tapa y calienta 2–3 min, remueve y 1–2 min más.',Carne:'Tapa y calienta 3 min, remueve y 2 min más.',Legumbres:'Tapa y calienta 3 min, remueve y 2 min más.',Otros:'Tapa, calienta y remueve a mitad.'};
+const SEED=`Lentejas con verduras y arroz|Legumbres|45|MFGVSLA|250 g de lentejas cocidas;50 g de arroz;1 zanahoria;½ cebolla;½ pimiento;Tomate triturado y aceite de oliva|Sofríe la verdura, añade lentejas, arroz y caldo casero. Cocina hasta que el arroz esté tierno.
+Arroz con pollo y verduras|Arroz|35|PGSLDA|180 g de pollo;90 g de arroz;1 zanahoria;½ pimiento;50 g de guisantes;Caldo casero|Sofríe la verdura, añade el pollo en dados, el arroz, los guisantes y el caldo hasta que esté hecho.
+Merluza en salsa verde con patatas|Pescado|35|MPGSLA|200 g de merluza;250 g de patatas;Ajo, perejil y guisantes;Aceite de oliva|Cuece la patata con ajo, perejil y caldo; añade la merluza 4 min al final.
+Pasta integral con atún y tomate|Pasta|25|MPFGLD|90 g de pasta integral;1 lata de atún;200 g de verduras;150 g de tomate triturado|Haz la salsa de tomate con verduras, añade el atún y mezcla con la pasta.
+Garbanzos con espinacas y patata|Legumbres|35|MFGVSLA|250 g de garbanzos cocidos;150 g de espinacas;150 g de patata;½ cebolla;Tomate, pimentón y aceite de oliva|Sofríe, añade tomate, garbanzos, patata y caldo; las espinacas al final.
+Pollo al horno con patatas y verduras|Pollo|50|MPGSLDA|200 g de pollo sin piel;250 g de patatas;200 g de verduras;Aceite de oliva, ajo y especias|Aliña todo en una bandeja y hornea hasta que el pollo esté bien hecho.
+Espaguetis con boloñesa de pavo|Pasta|35|PGLD|90 g de espaguetis;180 g de pavo picado;200 g de verduras;200 g de tomate triturado|Cocina el pavo con verdura picada y tomate. Mezcla con la pasta.
+Salmón al horno con arroz y brócoli|Pescado|30|MPGSLD|180 g de salmón;90 g de arroz;150 g de brócoli;Limón y aceite de oliva|Hornea el salmón con limón. Sirve con arroz y brócoli cocidos.
+Quinoa con verduras asadas y garbanzos|Otros|35|MFGVSLD|80 g de quinoa;150 g de garbanzos cocidos;200 g de calabacín y pimiento;Aceite de oliva y comino|Asa la verdura, cuece la quinoa y mezcla todo con los garbanzos.
+Ternera guisada con patatas|Carne|70|PSLDA|180 g de ternera magra;250 g de patatas;1 zanahoria;½ cebolla;Tomate y caldo casero|Dora la carne, añade verdura, tomate y caldo. Cuando esté tierna, añade las patatas.
+Tofu salteado con verduras y arroz|Otros|25|PFGVSLD|150 g de tofu firme;90 g de arroz;200 g de verduras;Tamari sin gluten;Jengibre|Saltea el tofu en dados con la verdura y el tamari. Sirve con arroz.
+Crema de calabaza con pollo desmenuzado|Pollo|35|PGSLA|150 g de pollo;300 g de calabaza;1 zanahoria;½ cebolla;Aceite de oliva|Cuece la verdura y tritúrala. Añade el pollo cocido y desmenuzado.
+Macarrones integrales con pollo|Pasta|30|PFGLD|90 g de macarrones integrales;160 g de pollo;200 g de verduras;150 g de tomate triturado|Sofrito de verduras y tomate, añade el pollo y mezcla con la pasta.
+Pisto con huevo y patata|Otros|35|MSLA|2 huevos;250 g de calabacín, pimiento y tomate;150 g de patata;Aceite de oliva|Haz el pisto a fuego lento, añade la patata cocida y los huevos hasta cuajar.
+Bacalao con garbanzos y espinacas|Pescado|40|MPFGSLDA|180 g de bacalao desalado;200 g de garbanzos cocidos;100 g de espinacas;Ajo y pimentón|Sofríe ajo y pimentón, añade garbanzos y caldo, el bacalao 5 min y las espinacas.
+Albóndigas de pavo con tomate y patatas|Carne|45|PGSLDA|180 g de pavo picado;1 huevo;250 g de patatas;200 g de tomate triturado;Ajo y perejil|Mezcla pavo, huevo, ajo y perejil; forma albóndigas y cocínalas en tomate con las patatas.
+Arroz integral con setas y verduras|Arroz|40|MFGVSLA|90 g de arroz integral;150 g de setas;1 zanahoria;½ pimiento;Aceite de oliva|Sofríe verdura y setas, añade arroz y caldo; cocina hasta que esté tierno.
+Lomo con champiñones y arroz|Carne|35|PGSLD|180 g de lomo magro;90 g de arroz;150 g de champiñones;1 zanahoria;Caldo casero|Cocina el lomo en tiras con champiñones y zanahoria. Sirve con arroz.
+Curry de garbanzos con arroz|Legumbres|30|FGVSLD|200 g de garbanzos cocidos;90 g de arroz;150 g de calabacín;100 g de tomate triturado;Curry suave|Cocina verdura, tomate y curry; añade los garbanzos y sirve con arroz.
+Dorada al horno con verduras|Pescado|35|MPGSLDA|200 g de dorada;250 g de patatas;1 pimiento;1 tomate;Limón y aceite de oliva|Hornea las verduras y la dorada con limón hasta que esté hecha.
+Pasta integral con verduras y tomate|Pasta|25|MFGVLD|90 g de pasta integral;250 g de verduras;150 g de tomate triturado;Aceite de oliva y albahaca|Saltea la verdura, añade tomate y mezcla con la pasta.
+Crema de lentejas rojas|Legumbres|30|FGVSLA|80 g de lentejas rojas;1 zanahoria;½ cebolla;150 g de calabaza;Comino|Cuece todo hasta que esté blando y tritura.
+Pollo suave al curry con arroz|Pollo|35|PGSLDA|180 g de pollo;90 g de arroz;200 g de verduras;100 g de tomate triturado;Curry suave|Cocina el pollo con la verdura, añade tomate y curry. Sirve con arroz.
+Pasta sin gluten con pollo y tomate|Pasta|30|PGSLD|90 g de pasta sin gluten;160 g de pollo;200 g de verduras;150 g de tomate triturado|Cocina el pollo con verdura y tomate; mezcla con la pasta cocida.
+Alubias estofadas con verduras|Legumbres|45|MFGVSLA|250 g de alubias cocidas;1 zanahoria;½ pimiento;½ cebolla;Tomate y pimentón|Sofríe la verdura, añade tomate, alubias y caldo; cocina a fuego lento.
+Puré de verduras con merluza|Pescado|30|PGSLA|200 g de merluza;200 g de patata;150 g de judías verdes;1 zanahoria|Cuece las verduras y tritura con parte del caldo; sirve con la merluza al vapor.
+Estofado de pavo con patatas|Pollo|45|PGSLDA|200 g de pavo;250 g de patatas;1 zanahoria;50 g de guisantes;Caldo casero|Cocina el pavo con verdura y caldo; añade patata y guisantes hasta que todo esté tierno.
+Hamburguesas de pollo con boniato|Pollo|35|PGSLD|180 g de pollo picado;1 huevo;250 g de boniato;Ajo y perejil|Forma hamburguesas con pollo, huevo y ajo; plancha y sirve con boniato asado.
+Ensalada templada de legumbres y atún|Legumbres|20|MPFGSLD|200 g de garbanzos cocidos;1 lata de atún;1 tomate;½ cebolla;Aceite de oliva y perejil|Mezcla todo y caliéntalo suavemente antes de comer.
+Tortilla de espinacas y patata|Otros|30|MSLA|2 huevos;100 g de espinacas;150 g de patata;Aceite de oliva|Pocha patata y espinacas, añade el huevo batido y cuaja la tortilla.
+Paella de pollo y verduras|Arroz|50|MPGSLDA|180 g de pollo;90 g de arroz;1 pimiento;100 g de judías verdes;1 tomate;Azafrán y caldo casero|Sofríe el pollo y la verdura, añade tomate y arroz y el caldo con azafrán; cocina 18 min sin remover y reposa 5.
+Cocido ligero de garbanzos con pollo|Legumbres|75|MPFGSLDA|200 g de garbanzos cocidos;120 g de pollo;1 patata;1 zanahoria;100 g de repollo;Caldo casero|Cuece el pollo con la verdura y el caldo; añade garbanzos y patata hasta que todo esté tierno.
+Berenjenas rellenas de pavo|Otros|55|MPGSLDA|2 berenjenas;150 g de pavo picado;1 cebolla;200 g de tomate triturado;Ajo y orégano|Hornea las berenjenas, vacía la pulpa y rehógala con pavo y tomate; rellena y hornea 15 min.
+Merluza al horno con patatas panaderas|Pescado|50|MPGSLDA|200 g de merluza;300 g de patatas;1 cebolla;1 pimiento;Ajo, perejil y aceite de oliva|Hornea patatas, cebolla y pimiento 30 min; añade la merluza y hornea 15 min más.
+Pollo relleno de espinacas con boniato|Pollo|55|PGSLDA|200 g de pechuga abierta;100 g de espinacas;250 g de boniato;Ajo y aceite de oliva|Rellena la pechuga con espinacas salteadas, ciérrala y hornea 30 min con el boniato.
+Musaka ligera de berenjena y ternera|Carne|70|MPGSLD|2 berenjenas;150 g de ternera picada magra;1 patata;1 cebolla;200 g de tomate triturado|Asa berenjena y patata en láminas; cocina la carne con cebolla y tomate; monta capas y hornea 25 min.
+Arroz al horno con verduras y garbanzos|Arroz|55|MFGVSLDA|90 g de arroz;150 g de garbanzos cocidos;1 tomate;1 pimiento;100 g de calabaza;Ajo, pimentón y caldo casero|Pon todo en una cazuela con el caldo y hornea 30 min a 200 °C.
+Hamburguesas de lentejas con verduras asadas|Legumbres|45|FGVSLD|200 g de lentejas cocidas;1 zanahoria;½ cebolla;2 cdas de harina de garbanzo;250 g de verduras para asar|Tritura lentejas y verdura rallada con la harina, forma hamburguesas y hornea 20 min con las verduras.
+Pimientos rellenos de arroz y verduras|Otros|55|MFGVSLA|3 pimientos;80 g de arroz;1 tomate;½ cebolla;Aceite de oliva y especias|Rellena los pimientos con el sofrito y el arroz cocido; hornea 30 min.
+Pastel de pescado y verduras|Pescado|55|MPGSLA|200 g de merluza;150 g de patata;1 zanahoria;2 huevos;Perejil|Tritura el pescado cocido con la verdura y los huevos; hornea en molde 30 min.
+Pollo salteado con verduras y arroz|Pollo|25|PGSLD|180 g de pollo en tiras;90 g de arroz cocido;200 g de verduras;Tamari sin gluten|Saltea el pollo y la verdura a fuego fuerte y mezcla con el arroz.
+Revuelto de gambas y espinacas|Otros|20|MPGSLA|2 huevos;120 g de gambas;100 g de espinacas;Ajo y aceite de oliva|Saltea ajo, gambas y espinacas; añade los huevos y cuaja sin pasarte.
+Atún con pisto y arroz|Pescado|25|MPGSLD|1 lata de atún;90 g de arroz;250 g de pisto de verduras|Calienta el pisto, añade el atún y sirve con el arroz.
+Fideos de arroz con tofu y verduras|Otros|20|PFGVSLD|150 g de tofu;80 g de fideos de arroz;200 g de verduras;Tamari sin gluten|Saltea tofu y verdura, añade los fideos cocidos y el tamari.
+Quinoa con pollo y verduras|Pollo|25|PFGSLD|80 g de quinoa;160 g de pollo;200 g de verduras;Aceite de oliva y limón|Cuece la quinoa, saltea el pollo con la verdura y mezcla.
+Merluza a la plancha con puré de calabaza|Pescado|25|PGSLA|200 g de merluza;300 g de calabaza;Aceite de oliva|Cuece y tritura la calabaza; haz la merluza a la plancha.
+Pavo con champiñones y patata|Pollo|30|PGSLDA|180 g de pavo;250 g de patatas;150 g de champiñones;Ajo y perejil|Cuece la patata; saltea el pavo con champiñones y ajo; mezcla.
+Crema de verduras con garbanzos|Legumbres|25|MFGVSLA|200 g de garbanzos cocidos;300 g de verduras;1 patata;Aceite de oliva|Cuece la verdura con la patata y tritura con los garbanzos.`;
+const $=i=>document.getElementById(i),esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const MES=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'],DN=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'],DS=['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'],EP=new Date(2026,0,5,12);
+const R={};SEED.split('\n').forEach((l,i)=>{const[name,cat,min,tags,ing,steps]=l.split('|'),id='d'+(i+1);R[id]={id,name,cat,min:+min,tags,ing:ing.split(';'),steps}});
+let S;try{S=JSON.parse(localStorage.menu3)}catch(e){}S=S||{p:'M',ov:{},done:{},rec:{},chk:{},del:{}};S.pf=S.pf||{};S.pk=S.pk||[];S.mode=S.mode||'t';S.st=S.st||'a';S.md=S.md||{};
+let tab='plan',q='',cf='',SL=null,off=0;
+const save=()=>{try{localStorage.menu3=JSON.stringify(S)}catch(e){}},commit=()=>{save();render()};
+const all=()=>({...R,...S.rec}),lib=()=>Object.values(all()).filter(r=>!S.del[r.id]).sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}));
+/* Preferencias: ✅ (1) se repite más en el menú, 🚫 (-1) se excluye */
+const nz=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''),PF={Pollo:'pollo',Vacuno:'ternera|vacuno',Cerdo:'lomo|cerdo',Pavo:'pavo',Pescado:'merluza|salmon|dorada|bacalao|atun',Verduras:'verdura|zanahoria|pimiento|calabac|espinaca|brocoli|judias|calabaza|seta|champi',Legumbres:'lenteja|garbanzo|alubia',Huevo:'huevo',Arroz:'arroz',Pasta:'pasta|macarron|espagueti',Patata:'patata|boniato',Tofu:'tofu'};
+const hit=(r,n)=>{const t=nz(r.name+' '+r.ing.join(' '));return (PF[n]||nz(n)).split('|').some(w=>t.includes(w))},sc=r=>Object.keys(S.pf).filter(n=>S.pf[n]>0&&hit(r,n)).length,av=r=>Object.keys(S.pf).some(n=>S.pf[n]<0&&hit(r,n));
+/* Estilo: r = rápido (hasta 35 min), e = elaborado (35 min o más). Si quedan menos de 4 platos, se relajan filtros. */
+const pbase=st=>{const b=lib().filter(r=>r.tags.includes(S.p)),x=b.filter(r=>(st=='r'?r.min<=35:r.min>=35)&&!av(r));if(x.length>=4)return{L:x,lim:0};const y=b.filter(r=>!av(r));return{L:y.length>=4?y:b,lim:1}};
+const pool=st=>{const{L}=pbase(st),s=[];for(let k=0;k<3;k++)L.forEach(r=>{if(sc(r)>=k)s.push(r)});return s};
+const addD=(d,n)=>{d=new Date(d);d.setDate(d.getDate()+n);return d},mon0=()=>{const d=new Date();d.setDate(d.getDate()-(d.getDay()+6)%7);d.setHours(12,0,0,0);return d},mon=()=>addD(mon0(),off*7);
+const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'),dt=k=>{const[a,b,c]=k.split('-');return new Date(+a,+b-1,+c,12)},fmt=d=>d.getDate()+' '+MES[d.getMonth()];
+/* Menú base: rota por el conjunto de platos del perfil; cada semana cambia. Los cambios del usuario se guardan por perfil y día. */
+const get=d=>{d=new Date(d);d.setHours(12,0,0,0);const k=iso(d),o=S.ov[S.p+k],m=S.md[k]||S.mode,L=pool(S.st=='a'?(m=='c'?'e':'r'):S.st),z=L.length||1,n=Math.round((d-EP)/864e5),i=((n+Math.floor(n/7))%z+z)%z,r=all()[o||(L[i]||lib()[0]).id]||lib()[0];return{k,r,done:!!S.done[k],ov:!!o,m}};
+const tg=r=>[...r.tags].map(c=>T[c]?`<span class="pill">${T[c][0]} ${T[c][1]}</span>`:'').join('');
+function toast(s){const t=$('toast');t.textContent=s;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000)}
+const M=h=>{$('mb').innerHTML=h;$('m').classList.add('open')};
+function render(){document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on',p.id=='p-'+tab));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.x==tab));$('wb').hidden=tab=='rec';
+const m=mon(),f=addD(m,6);$('wb').innerHTML=`<button data-a="wk" data-x="-1" aria-label="Semana anterior">‹</button><div><b>${m.getMonth()==f.getMonth()?m.getDate()+'–'+fmt(f):fmt(m)+' – '+fmt(f)}</b><small>${off==0?'Semana actual':'<a href="#" data-a="now">volver a la semana actual</a>'}</small></div><button data-a="wk" data-x="1" aria-label="Semana siguiente">›</button>`;rPlan();rRec();rShop()}
+function rPlan(){const tp=S.mode=='t',ps=S.st=='a'?['r','e']:[S.st],pq=ps.map(pbase),nP=new Set(pq.flatMap(x=>x.L.map(r=>r.id))).size;
+$('ms').innerHTML=[['a','🪄 Automático'],['r','⚡ Rápido'],['e','👨‍🍳 Elaborado']].map(([v,l])=>`<button class="chip ${S.st==v?'on':''}" data-a="st" data-x="${v}">${l}</button>`).join('');
+$('sh').textContent={a:'Automático: platos rápidos (hasta 35 min) para el táper y más elaborados (35 min o más) para comer en casa.',r:'Platos de hasta 35 min, comas donde comas.',e:'Platos de 35 min o más, para cocinar con calma.'}[S.st];$('mc').innerHTML=[['t','🍱 Táper'],['c','🏠 En casa']].map(([v,l])=>`<button class="chip ${S.mode==v?'on':''}" data-a="mode" data-x="${v}">${l}</button>`).join('');
+$('sub').textContent=tp?'Cocinas el día anterior, calientas a las 14:00':'Cocinas y comes en casa el mismo día';
+$('nt').textContent=tp?'🧊 Enfría el guiso pronto, guárdalo en la nevera y lleva el táper frío (con bolsa isotérmica). A las 14:00 caliéntalo hasta que humee por el centro (74 °C). El arroz, enfríalo rápido.':'🏠 Cocina y sirve al momento. Si sobra, enfríalo rápido, guárdalo en la nevera y consúmelo en 2–3 días; recaliéntalo hasta que humee por el centro (74 °C). Con el botón 🍱/🏠 de cada día puedes cambiar solo ese día.';$('pc').innerHTML=Object.keys(T).map(c=>`<button class="chip ${S.p==c?'on':''}" data-a="pf" data-x="${c}">${T[c][0]} ${T[c][1]}</button>`).join('');
+$('pb').innerHTML=`<b>${T[S.p][0]} ${T[S.p][1]}:</b> ${T[S.p][2]} <i>(${nP} platos, editables)</i>${pq.some(x=>x.lim)?'<br>⚠️ Con el tiempo elegido y lo que evitas quedan pocos platos en este menú; se relajan algunos filtros. Prueba otro menú.':''}`;
+$('pbx').innerHTML=[...Object.keys(PF),...S.pk].map(n=>{const v=S.pf[n]||0;return`<button class="chip ${v>0?'on':v<0?'no':''}" data-a="pp" data-x="${esc(n)}">${v>0?'✅ ':v<0?'🚫 ':''}${esc(n)}</button>`}).join('');$('ps').textContent=`🥕 Mis preferencias (${Object.keys(S.pf).length})`;
+const t0=new Date(),tm=addD(t0,1),a=get(t0),b=get(tm),hr=(e,d)=>{const r=e.r,c=e.m=='c';return`<div class="hero"><small>${e.done?'Ya está cocinado ✓':c?'Hoy toca cocinar y comer en casa':'Hoy toca cocinar para el '+DN[d.getDay()]+' '+fmt(d)}</small><h2>${EM[r.cat]} ${esc(r.name)}</h2><div class="clock">${c?`<div><i>Ahora</i><b>🍳 Cocinar</b></div><i>›</i><div><i>14:00</i><b>🍽️ A la mesa</b></div>`:`<div><i>Hoy</i><b>🍳 Cocinar</b></div><i>›</i><div><i>7:00</i><b>🎒 Al táper</b></div><i>›</i><div><i>14:00</i><b>🔥 Calentar</b></div>`}</div><button class="go" data-a="rv" data-x="${r.id}">Ver receta</button></div>`};
+$('hero').innerHTML=a.m=='c'&&!a.done?hr(a,t0):b.m=='t'?hr(b,tm):a.m=='c'?hr(a,t0):`<div class="hero"><small>Hoy no hay que cocinar</small><h2>🎉 Día libre de cocina</h2><button class="go" data-a="now">Ver el menú de la semana</button></div>`;
+const hoy=iso(new Date());
+$('days').innerHTML=[0,1,2,3,4,5,6].map(i=>{const d=addD(mon(),i),e=get(d),r=e.r,p=addD(d,-1);return`<article class="day ${e.done?'done':''} ${e.k==hoy?'today':''}" data-a="view" data-x="${e.k}"><div class="badge"><div><b>${DS[i]}</b><br>${d.getDate()}</div></div><div><h3>${EM[r.cat]} ${esc(r.name)}</h3><p>${e.m=='c'?'🏠 En casa, cocinar el mismo día':'🍱 Táper, cocinar el '+DN[p.getDay()]+' '+p.getDate()}, ${r.min} min${e.ov?', cambiado':''}</p></div><div class="acts"><button class="${e.done?'':'ghost'}" data-a="done" data-x="${e.k}">${e.done?'✓ Cocinado':'Marcar cocinado'}</button><button class="ghost" data-a="swap" data-x="${e.k}">Cambiar</button><button class="ghost" data-a="md" data-x="${e.k}" aria-label="Cambiar entre táper y en casa">${e.m=='c'?'🏠':'🍱'}</button></div></article>`}).join('')}
+function rRec(){const L=lib().filter(r=>(!cf||r.cat==cf)&&r.name.toLowerCase().includes(q.toLowerCase()));
+$('rc').innerHTML=['',...Object.keys(EM)].map(c=>`<button class="chip ${cf==c?'on':''}" data-a="cf" data-x="${c}">${c?EM[c]+' '+c:'Todos'}</button>`).join('');
+$('rl').innerHTML=L.map(r=>`<article class="item" data-a="rv" data-x="${r.id}"><span class="em">${EM[r.cat]}</span><div><h3>${esc(r.name)}</h3><p>${r.cat}, ${r.min} min · ${[...r.tags].map(c=>T[c]?T[c][0]:'').join('')}</p></div></article>`).join('')||'<p class="empty">No hay platos con ese filtro.</p>'}
+const ck=x=>iso(mon())+'|'+x.k,on=x=>S.chk[ck(x)]>0?1:0;
+function shopItems(){const m=new Map();[0,1,2,3,4,5,6].forEach(i=>{const d=addD(mon(),i);get(d).r.ing.forEach(g=>{const k=g.toLowerCase().trim();if(!m.has(k))m.set(k,{g,k,d:[]});m.get(k).d.push(DS[i]+' '+d.getDate())})});return[...m.values()].sort((a,b)=>(on(a)-on(b))||a.g.localeCompare(b.g,'es'))}
+function rShop(){const L=shopItems();$('sc').textContent=`${L.length} ingredientes, ${L.filter(on).length} marcados`;$('sl').innerHTML=L.map(x=>`<label class="shop ${on(x)?'on':''}"><input type="checkbox" ${on(x)?'checked':''} data-a="chk" data-x="${esc(x.k)}"><span>${esc(x.g)}<small>${x.d.join(', ')}</small></span></label>`).join('')}
+function rview(id,k){const r=all()[id],d=k&&dt(k),e=k&&get(d);M(`${d?`<small style="color:var(--mu)">${DN[d.getDay()]} ${fmt(d)}</small><br>`:''}<span class="pill">${EM[r.cat]} ${r.cat}</span>${tg(r)}<h2 style="margin:10px 0 4px">${esc(r.name)}</h2><small style="color:var(--mu)">${r.min} min, para 1 persona</small>${(e?e.m:S.mode)=='c'?'<div class="heat">🍽️ <b>Al servir:</b> sírvelo recién hecho. Lo que sobre, a la nevera en menos de 2 h y máx. 2–3 días.</div>':`<div class="heat">🔥 <b>A las 14:00:</b> ${TIP[r.cat]||TIP.Otros}</div>`}<h3>Ingredientes</h3><ul>${r.ing.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><h3>Preparación</h3><p>${esc(r.steps||'Sin pasos todavía.')}</p><div class="row"><button data-a="edit" data-x="${id}">Editar</button>${k?`<button class="ghost" data-a="swap" data-x="${k}">Cambiar</button><button class="ghost" data-a="md" data-x="${k}">${e.m=='c'?'🍱 Pasar a táper':'🏠 Comer en casa'}</button>${e.ov?`<button class="ghost" data-a="reset" data-x="${k}">Plato habitual</button>`:''}`:`<button class="ghost" data-a="place" data-x="${id}">Poner en un día</button><button class="red" data-a="del" data-x="${id}">Borrar</button>`}<button class="ghost" data-a="close">Cerrar</button></div>`)}
+function form(id){const r=all()[id]||{name:'',cat:'Pollo',min:30,ing:[],steps:'',tags:S.p};M(`<h2>${id?'Editar plato':'Nuevo plato'}</h2><form id="fr"><input type="hidden" name="rid" value="${id||''}"><label>Nombre</label><input name="name" required value="${esc(r.name)}"><div class="row"><div style="flex:1"><label>Categoría</label><select name="cat">${Object.keys(EM).map(c=>`<option ${c==r.cat?'selected':''}>${c}</option>`).join('')}</select></div><div style="flex:1"><label>Minutos</label><input name="min" type="number" min="0" value="${r.min}"></div></div><label>Etiquetas (en qué menús aparece)</label>${Object.keys(T).map(c=>`<label class="tg"><input type="checkbox" name="tg" value="${c}" ${r.tags.includes(c)?'checked':''}>${T[c][0]} ${T[c][1]}</label>`).join('')}<label>Ingredientes (uno por línea)</label><textarea name="ing" rows="5" required>${esc(r.ing.join('\n'))}</textarea><label>Preparación</label><textarea name="steps" rows="4">${esc(r.steps)}</textarea><div class="row"><button>Guardar plato</button><button type="button" class="ghost" data-a="close">Cancelar</button></div></form>`)}
+function pickList(f=''){return lib().filter(r=>r.name.toLowerCase().includes(f.toLowerCase())).sort((a,b)=>b.tags.includes(S.p)-a.tags.includes(S.p)).map(r=>`<article class="item" style="margin-bottom:8px" data-a="pick" data-x="${r.id}"><span class="em">${EM[r.cat]}</span><div><h3>${esc(r.name)}${r.tags.includes(S.p)?' ⭐':''}</h3><p>${r.cat}, ${r.min} min</p></div></article>`).join('')}
+const ACT={
+close:()=>$('m').classList.remove('open'),
+st:x=>{S.st=x;commit();toast({a:'Rápido en táper, elaborado en casa',r:'Menú rápido',e:'Menú elaborado'}[x])},
+mode:x=>{S.mode=x;[0,1,2,3,4,5,6].forEach(i=>delete S.md[iso(addD(mon(),i))]);commit();toast(x=='t'?'Menú para llevar en táper':'Menú para comer en casa')},
+md:k=>{S.md[k]=get(dt(k)).m=='t'?'c':'t';ACT.close();commit()},
+pp:x=>{const v=S.pf[x]||0;if(v<0){delete S.pf[x];S.pk=S.pk.filter(n=>n!=x)}else S.pf[x]=v+1>1?-1:1;commit()},
+addp:()=>{const n=$('pn').value.trim();if(!n)return;if(!PF[n]&&!S.pk.includes(n))S.pk.push(n);S.pf[n]=1;$('pn').value='';commit();const c=lib().filter(r=>hit(r,n)).length;toast(c?c+' platos lo incluyen':'Ningún plato lo incluye aún: crea uno con ese ingrediente')},tab:x=>{tab=x;render()},wk:x=>{off+=+x;render()},now:()=>{off=0;tab='plan';render()},
+pf:x=>{S.p=x;commit();toast(T[x][1])},rst:()=>{if(!confirm('¿Quitar tus cambios de días en este menú?'))return;Object.keys(S.ov).filter(k=>k.startsWith(S.p+'2')).forEach(k=>delete S.ov[k]);commit()},
+done:k=>{S.done[k]=!S.done[k];commit()},view:k=>rview(get(dt(k)).r.id,k),rv:id=>rview(id),edit:id=>form(id),newr:()=>{SL=null;form()},new:()=>form(),
+swap:k=>{SL=k;const d=dt(k);M(`<h2>Cambiar el ${DN[d.getDay()]} ${fmt(d)}</h2><p style="margin:6px 0;color:var(--mu);font-size:13px">⭐ = encaja con tu menú ${T[S.p][1]}</p><input placeholder="Buscar plato…" oninput="$('pl').innerHTML=pickList(this.value)" style="margin:8px 0 12px"><div id="pl">${pickList()}</div><div class="row"><button data-a="new">＋ Crear plato nuevo</button><button class="ghost" data-a="close">Cerrar</button></div>`)},
+pick:id=>{S.ov[S.p+SL]=id;SL=null;ACT.close();commit();toast('Menú actualizado')},
+reset:k=>{delete S.ov[S.p+k];ACT.close();commit();toast('Vuelve el plato habitual')},cf:x=>{cf=x;rRec()},
+place:id=>M(`<h2>Poner en un día</h2><form id="fp"><input type="hidden" name="rid" value="${id}"><label>Día</label><input type="date" name="dt" required value="${iso(mon0())}"><div class="row"><button>Añadir al menú</button><button type="button" class="ghost" data-a="close">Cancelar</button></div></form>`),
+del:id=>{if(Object.values(S.ov).includes(id))return toast('Está en el menú: cámbialo primero');if(!confirm('¿Borrar este plato?'))return;S.del[id]=1;ACT.close();commit()},
+chk:(k,_,el)=>{S.chk[iso(mon())+'|'+k]=el.checked?Date.now():-Date.now();commit()},
+unchk:()=>{Object.keys(S.chk).filter(k=>k.startsWith(iso(mon())+'|')).forEach(k=>S.chk[k]=-Date.now());commit()},
+copy:()=>{const t=`Compra del ${fmt(mon())} al ${fmt(addD(mon(),6))}\n\n`+shopItems().map(x=>'[ ] '+x.g).join('\n');navigator.share?navigator.share({text:t}).catch(()=>{}):navigator.clipboard.writeText(t).then(()=>toast('Lista copiada'))}};
+document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b)return;if(b.tagName=='A')e.preventDefault();if(b.type!='checkbox'&&b.closest('label'))return;ACT[b.dataset.a]?.(b.dataset.x,b.dataset.y,b)});
+$('m').addEventListener('click',e=>{if(e.target.id=='m')ACT.close()});
+document.addEventListener('submit',e=>{e.preventDefault();const f=e.target,v=n=>f.elements[n].value.trim(),now=Date.now();
+if(f.id=='fr'){const id=v('rid')||'u'+now.toString(36),ing=v('ing').split('\n').map(x=>x.trim()).filter(Boolean),tags=[...f.querySelectorAll('[name=tg]:checked')].map(x=>x.value).join('');S.rec[id]={id,name:v('name'),cat:v('cat'),min:+v('min')||30,tags,ing,steps:v('steps')};if(!v('rid')&&SL)S.ov[S.p+SL]=id;SL=null;ACT.close();commit();toast('Plato guardado')}
+else if(f.id=='fp'){S.ov[S.p+v('dt')]=v('rid');off=Math.round((addD(dt(v('dt')),-((dt(v('dt')).getDay()+6)%7))-mon0())/6048e5);tab='plan';ACT.close();commit();toast('Añadido al menú')}});
+if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
+render();
+</script>
+</body>
+</html>
